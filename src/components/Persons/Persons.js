@@ -12,10 +12,18 @@ class Persons extends Component {
   //     console.log('[Persons.js] componentWillReceiveProps', props);
   // }
 
-
+  /*
+     If you don't want to implement manually the props check you can extend the class
+     with another component named PureComponent, this component already implements
+     "shouldComponentUpdate" with a complete props check
+  */
   shouldComponentUpdate(nextProps, nextState){
     console.log('[Persons.js] shouldComponentUpdate');
-    return true;
+    if (nextProps.persons !== this.props.persons) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState){
@@ -25,6 +33,11 @@ class Persons extends Component {
 
   //Lifecycle Hooks not supported anymore
   //componentWillUpdate() {}
+
+  // use when you need to do a clean up work
+  componentWillUnmount(){
+    console.log('[Persons.js] componentWillUnmount');
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log('[Persons.js] componentDidUpdate');

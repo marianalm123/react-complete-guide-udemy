@@ -1,7 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './Cockpit.css';
 
 const cockpit = (props) => {
+  /*
+    Second more used hooks that takes a function which will run every render cicle
+    When you need something to update every render cicle like "Http request..."
+    You can use "useEffect" as many times you want
+
+    Do something only when name of the person is changed you need to pass an array
+    with the variable "props.persons".
+
+    In case you want the useEffect only when the application render for the first
+    time you need to use an empty array.
+  */
+  useEffect(() => {
+    console.log('[Cockpit.js] UseEffect');
+
+    setTimeout(() => {
+      alert('Saved data to cloud!');
+    }, 1000);
+
+    return () => {
+      console.log('[Cockpit.js] cleanup work in UseEffect');
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('[Cockpit.js] 2nd UseEffect');
+
+    return () => {
+      console.log('[Cockpit.js] cleanup work in 2nd UseEffect');
+    };
+  });
 
   const assignedClasses = [];
   let btnClass = '';
@@ -10,10 +40,10 @@ const cockpit = (props) => {
     btnClass = classes.Red;
   }
 
-  if (props.persons.length <= 2){
+  if (props.personsLength <= 2){
     assignedClasses.push(classes.red); //classes = ['red']
   }
-  if (props.persons.length <=1) {
+  if (props.personsLength <=1) {
     assignedClasses.push(classes.bold); //classes = ['red','bold']
   }
 
@@ -28,4 +58,8 @@ const cockpit = (props) => {
   );
 };
 
-export default cockpit;
+/* React.memo() gets optimization it can wrap functional component that might not need
+   update with every change in the parent component.
+   Ex: Cockpit doesn't update every time the name of the person is changed on input field
+*/
+export default React.memo(cockpit);
