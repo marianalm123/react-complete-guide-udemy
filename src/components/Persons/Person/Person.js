@@ -11,6 +11,8 @@ class Person extends Component {
     this.inputElementRef = React.createRef();
   }
 
+  static contextType = AuthContext;
+
   componentDidMount() {
     //this.inputElement.focus();
     this.inputElementRef.current.focus();
@@ -21,11 +23,11 @@ class Person extends Component {
     return (
       //We can use "Fragment" component imported from react, it will works equal our created component "Aux"
       <Aux>
-          <AuthContext.Consumer>
-            {(context) =>
-              context.authenticated ? <p>Authenticated!</p> : <p>Please Login!</p>
-            }
-          </ AuthContext.Consumer>
+          {this.context.authenticated ? (
+            <p>Authenticated!</p>
+          ) : (
+            <p>Please Login!</p>
+          )}
           <p
             onClick={this.props.click}>
             I'm {this.props.name} and I am {this.props.age} years old!
